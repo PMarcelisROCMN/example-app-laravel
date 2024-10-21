@@ -71,7 +71,7 @@ jobs:
             .env
             .ftpignore
           log-level: verbose  # Enable detailed logs
-      
+
 
       # Step 10: Run Laravel cache and maintenance tasks
       - name: 🧹 Run Laravel maintenance tasks
