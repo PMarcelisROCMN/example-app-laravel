@@ -41,6 +41,17 @@ jobs:
           mkdir -p ./database  # Ensure the directory exists
           touch ./database/database.sqlite  # Create the SQLite file
 
+      # Step 6: Create .env file and generate APP_KEY
+      - name: 📝 Create .env file
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      # Step 7: Run database migrations (including cache table)
+      - name: 🛠️ Run database migrations
+        run: |
+          php artisan migrate --force
+
       # Step 5: Cache Node.js modules
       - name: 🎯 Cache Node.js modules
         uses: actions/cache@v3
