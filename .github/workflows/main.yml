@@ -24,8 +24,8 @@ jobs:
       - name: 🔧 Set up PHP and Composer
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Adjust PHP version as required
-          extensions: mbstring, xml, intl # Specify any required PHP extensions
+          php-version: '8.2'
+          extensions: mbstring, xml, intl
           coverage: none
 
       # Step 4: Install Composer dependencies
@@ -45,15 +45,15 @@ jobs:
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*' # This ensures you are always using the latest LTS version
+          node-version: 'lts/*'
 
       # Step 7: Install Node.js dependencies
       - name: 📦 Install Node.js dependencies
         run: npm install
 
-      # Step 8: Build frontend assets (if you have any)
+      # Step 8: Build frontend assets using Vite
       - name: 🛠 Build frontend assets
-        run: npm run build # Ensure this command exists in your `package.json`
+        run: npm run build
 
       # Step 9: Upload files to the server using FTP
       - name: 📂 Sync files to server
@@ -62,8 +62,14 @@ jobs:
           server: klas4s22.mid-ica.nl
           username: ${{ secrets.FTPUSERNAME }}
           password: ${{ secrets.FTPPASSWORD }}
-          local-dir: ./ # This will upload everything from the project root
-          server-dir: /public_html/test-project/production/ # Update this to your target directory
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            vendor/
+            node_modules/
+            .git/
+            .env
+            .ftpignore
 
       # Optional: Clear cache and other necessary Laravel maintenance tasks
       - name: 🧹 Run Laravel maintenance tasks
