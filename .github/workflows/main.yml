@@ -34,7 +34,7 @@ jobs:
       # Step 4: Install Composer dependencies
       - name: 📦 Install Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
-      
+
       # Step 5: Create SQLite database file (new step)
       - name: 🗄️ Create SQLite database
         run: |
@@ -86,4 +86,7 @@ jobs:
           php artisan route:cache
           php artisan view:cache
         env:
-          APP_ENV: production  # Ensure your environment variables are set for production
+            APP_ENV: production
+            DB_CONNECTION: sqlite
+            DB_DATABASE: /home/runner/work/example-app-laravel/example-app-laravel/database/database.sqlite
+
