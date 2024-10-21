@@ -1,0 +1,19 @@
+# Ignore the entire vendor folder if you plan to install dependencies on the server
+vendor/
+
+# Ignore node_modules
+node_modules/
+
+# Ignore environment files and other local config files
+.env
+.env.*
+.git/
+.github/
+.gitignore
+
+# Ignore storage logs and cache (can be rebuilt on server)
+storage/framework/cache/*
+storage/logs/*
+
+# Ignore Laravel's compiled services and packages (will be rebuilt)
+bootstrap/cache/*.php

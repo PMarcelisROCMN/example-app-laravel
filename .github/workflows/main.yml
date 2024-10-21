@@ -11,7 +11,16 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      # Step 2: Set up PHP with Composer
+      # Step 2: Cache Composer dependencies
+      - name: 🎯 Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-
+
+      # Step 3: Set up PHP with Composer
       - name: 🔧 Set up PHP and Composer
         uses: shivammathur/setup-php@v2
         with:
@@ -19,26 +28,34 @@ jobs:
           extensions: mbstring, xml, intl # Specify any required PHP extensions
           coverage: none
 
-      # Step 3: Install Composer dependencies
+      # Step 4: Install Composer dependencies
       - name: 📦 Install Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
 
-      # Step 4: Set up Node.js environment (if needed for front-end assets)
+      # Step 5: Cache Node.js modules
+      - name: 🎯 Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-
+
+      # Step 6: Set up Node.js environment
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*' # This ensures you are always using the latest LTS version
 
-
-      # Step 5: Install Node.js dependencies
+      # Step 7: Install Node.js dependencies
       - name: 📦 Install Node.js dependencies
         run: npm install
 
-      # Step 6: Build frontend assets (if you have any)
+      # Step 8: Build frontend assets (if you have any)
       - name: 🛠 Build frontend assets
         run: npm run build # Ensure this command exists in your `package.json`
 
-      # Step 7: Upload files to the server using FTP
+      # Step 9: Upload files to the server using FTP
       - name: 📂 Sync files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
