@@ -58,7 +58,7 @@ jobs:
       - name: 📂 Sync files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}  # Ensure you've added these secrets in your repository
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTPUSERNAME }}
           password: ${{ secrets.FTPPASSWORD }}
           local-dir: ./  # Sync the root directory (excluding paths below)
@@ -67,8 +67,11 @@ jobs:
             vendor/
             node_modules/
             .git/
+            .git/**  # Explicit exclusion of .git subdirectories
             .env
             .ftpignore
+          log-level: verbose  # Enable detailed logs
+      
 
       # Step 10: Run Laravel cache and maintenance tasks
       - name: 🧹 Run Laravel maintenance tasks
