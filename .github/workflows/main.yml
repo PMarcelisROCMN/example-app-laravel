@@ -52,7 +52,7 @@ jobs:
 
       # Step 7: Install Node.js dependencies
       - name: 📦 Install Node.js dependencies
-        run: npm install
+        run: npm install --production
 
       # Step 8: Build frontend assets using Vite (or Webpack if you're using that)
       - name: 🛠 Build frontend assets
