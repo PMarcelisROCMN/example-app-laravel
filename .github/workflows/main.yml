@@ -54,10 +54,6 @@ jobs:
       - name: 📦 Install Node.js dependencies
         run: npm install --production
 
-      # Step 8: Build frontend assets using Vite (or Webpack if you're using that)
-      - name: 🛠 Build frontend assets
-        run: npm run build
-
       # Step 9: Upload files to the server using FTP
       - name: 📂 Sync files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
