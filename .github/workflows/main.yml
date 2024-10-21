@@ -70,7 +70,7 @@ jobs:
             .git/**  # Explicit exclusion of .git subdirectories
             .env
             .ftpignore
-          log-level: verbose  # Enable detailed logs
+          method: sync  # Will delete files that don't exist in the current version
 
 
       # Step 10: Run Laravel cache and maintenance tasks
