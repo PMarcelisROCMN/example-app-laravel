@@ -64,9 +64,9 @@ jobs:
           local-dir: ./  # Sync the root directory (excluding paths below)
           server-dir: /test/  # Change this to the path on your FTP server
           exclude: |
-            vendor/**  # Recursively exclude vendor directory
-            node_modules/**  # Recursively exclude node_modules directory
-            .git/**  # Recursively exclude .git directory
+            **/vendor/**  # Recursively exclude vendor directory
+            **/node_modules/**  # Recursively exclude node_modules directory
+            **/.git/**  # Recursively exclude .git directory
             .env
             .ftpignore
           method: sync  # Will delete files that don't exist in the current version
