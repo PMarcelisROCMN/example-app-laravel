@@ -1,0 +1,58 @@
+on:
+  push:
+    branches: main
+name: 🚀 Deploy Laravel project on push
+jobs:
+  laravel-deploy:
+    name: 🎉 Deploy Laravel Project
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the latest code from the repository
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up PHP with Composer
+      - name: 🔧 Set up PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Adjust PHP version as required
+          extensions: mbstring, xml, intl # Specify any required PHP extensions
+          coverage: none
+
+      # Step 3: Install Composer dependencies
+      - name: 📦 Install Composer dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader
+
+      # Step 4: Set up Node.js environment (if needed for front-end assets)
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      # Step 5: Install Node.js dependencies
+      - name: 📦 Install Node.js dependencies
+        run: npm install
+
+      # Step 6: Build frontend assets (if you have any)
+      - name: 🛠 Build frontend assets
+        run: npm run build # Ensure this command exists in your `package.json`
+
+      # Step 7: Upload files to the server using FTP
+      - name: 📂 Sync files to server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: http://576682.klas4s22.mid-ica.nl
+          username: ${{ secrets.FTPUSERNAME }}
+          password: ${{ secrets.FTPPASSWORD }}
+          local-dir: ./ # This will upload everything from the project root
+          server-dir: /public_html/test-project/production # Update this to your target directory
+
+      # Optional: Clear cache and other necessary Laravel maintenance tasks
+      - name: 🧹 Run Laravel maintenance tasks
+        run: |
+          php artisan cache:clear
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+        env:
+          APP_ENV: production
