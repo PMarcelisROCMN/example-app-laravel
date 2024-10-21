@@ -1,11 +1,14 @@
 on:
   push:
     branches: main
+
 name: 🚀 Deploy Laravel project on push
+
 jobs:
   laravel-deploy:
     name: 🎉 Deploy Laravel Project
     runs-on: ubuntu-latest
+
     steps:
       # Step 1: Checkout the latest code from the repository
       - name: 🚚 Get latest code
@@ -24,7 +27,7 @@ jobs:
       - name: 🔧 Set up PHP and Composer
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.2'  # You can adjust the PHP version as per your project requirements
           extensions: mbstring, xml, intl
           coverage: none
 
@@ -45,13 +48,13 @@ jobs:
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*'
+          node-version: 'lts/*'  # Adjust the Node.js version as required
 
       # Step 7: Install Node.js dependencies
       - name: 📦 Install Node.js dependencies
         run: npm install
 
-      # Step 8: Build frontend assets using Vite
+      # Step 8: Build frontend assets using Vite (or Webpack if you're using that)
       - name: 🛠 Build frontend assets
         run: npm run build
 
@@ -59,11 +62,11 @@ jobs:
       - name: 📂 Sync files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: klas4s22.mid-ica.nl
+          server: ${{ secrets.FTP_SERVER }}  # Ensure you've added these secrets in your repository
           username: ${{ secrets.FTPUSERNAME }}
           password: ${{ secrets.FTPPASSWORD }}
-          local-dir: ./
-          server-dir: /public_html/
+          local-dir: ./  # Sync the root directory (excluding paths below)
+          server-dir: /test/  # Change this to the path on your FTP server
           exclude: |
             vendor/
             node_modules/
@@ -71,7 +74,7 @@ jobs:
             .env
             .ftpignore
 
-      # Optional: Clear cache and other necessary Laravel maintenance tasks
+      # Step 10: Run Laravel cache and maintenance tasks
       - name: 🧹 Run Laravel maintenance tasks
         run: |
           php artisan cache:clear
@@ -79,4 +82,4 @@ jobs:
           php artisan route:cache
           php artisan view:cache
         env:
-          APP_ENV: production
+          APP_ENV: production  # Ensure your environment variables are set for production
