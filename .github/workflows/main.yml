@@ -27,7 +27,8 @@ jobs:
       - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: 'lts/*' # This ensures you are always using the latest LTS version
+
 
       # Step 5: Install Node.js dependencies
       - name: 📦 Install Node.js dependencies
@@ -45,7 +46,7 @@ jobs:
           username: ${{ secrets.FTPUSERNAME }}
           password: ${{ secrets.FTPPASSWORD }}
           local-dir: ./ # This will upload everything from the project root
-          server-dir: /public_html/test-project/production # Update this to your target directory
+          server-dir: /public_html/test-project/production/ # Update this to your target directory
 
       # Optional: Clear cache and other necessary Laravel maintenance tasks
       - name: 🧹 Run Laravel maintenance tasks
