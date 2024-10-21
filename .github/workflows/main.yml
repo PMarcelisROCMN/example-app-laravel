@@ -42,7 +42,7 @@ jobs:
       - name: 📂 Sync files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: http://576682.klas4s22.mid-ica.nl
+          server: klas4s22.mid-ica.nl
           username: ${{ secrets.FTPUSERNAME }}
           password: ${{ secrets.FTPPASSWORD }}
           local-dir: ./ # This will upload everything from the project root
