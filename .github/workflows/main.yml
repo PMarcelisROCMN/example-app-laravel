@@ -79,7 +79,7 @@ jobs:
           username: pmarcelis
           password: 4ZMwLE28ndgDQSvY2y5L
           local-dir: ./  # Sync the root directory (excluding paths below)
-          server-dir: /test/example/  # Change this to the path on your FTP server
+          server-dir: /public_html/example/  # Change this to the path on your FTP server
           exclude: |
             **/vendor/**
             **/node_modules/**
