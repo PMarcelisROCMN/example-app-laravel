@@ -75,9 +75,9 @@ jobs:
       - name: 📂 Sync files to server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ pmarcelis.mid-ica.nl }}
-          username: ${{ pmarcelis }}
-          password: ${{ 4ZMwLE28ndgDQSvY2y5L }}
+          server: pmarcelis.mid-ica.nl
+          username: pmarcelis
+          password: 4ZMwLE28ndgDQSvY2y5L
           local-dir: ./  # Sync the root directory (excluding paths below)
           server-dir: /test/example/  # Change this to the path on your FTP server
           exclude: |
